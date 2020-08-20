@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Material Dashboard by Creative Tim
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+
+    <link href="~/Scripts/css/material-dashboard.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+
+    <link href="~/Scripts/css/demo.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                    Sisetema
+
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons">dashboard</i>
+                            <p>Casos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active ">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons">dashboard</i>
+                            <p>Diagnostico</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons">dashboard</i>
+                            <p>Donacion</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="content">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Casos</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="tabla" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Temperatura</th>
+                                    <th>Congestion</th>
+                                    <th>Indegestion</th>
+                                    <th>Tos</th>
+                                    <th>Fatiga</th>
+                                    <th>Falta Aliento</th>
+                                    <th>Gusto</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- TERMINA  el Contenido -->
+        </div>
+    </div>
+
+    <script src="~/Scripts/js/demo.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+
+</body>
+
+</html>
+
+
+<script>
+
+    $(document).ready(function () {
+        listaDiagnostico();
+    })
+
+    function listaDiagnostico() {
+      //  alert("hola");
+        $.ajax({
+
+            type: "GET",
+            url: '/Diagnostico/Get_Diagnostico/',
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                var rows = '';
+                $.each(data, function (i, item) {
+                    rows += "<tr>"
+
+                    rows += "<td>" + item.temperaturaCorporal + "</td>"
+                    rows += "<td>" + item.congestionNasal + "</td>"
+                    rows += "<td>" + item.indigestionEstomacal + "</td>"
+                    rows += "<td>" + item.tieneTos + "</td>"
+                    rows += "<td>" + item.fatiga + "</td>"
+                    rows += "<td>" + item.faltaAlimento + "</td>"
+                    rows += "<td>" + item.perdidaGusto + "</td>"
+                    rows += "<td> <button type='button' id='btnVer' class='btn btn-primary'  onClick='Detalle()'>Ver</td>"
+                    rows += "</tr>";
+                    $("#tabla tbody").html(rows);
+                });
+            }
+
+        })
+    }
+
+
+</script>

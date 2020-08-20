@@ -1,0 +1,322 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Material Dashboard by Creative Tim
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+
+    <link href="~/Scripts/css/material-dashboard.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+
+    <link href="~/Scripts/css/demo.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                    Sisetema
+
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item  ">
+                        <a class="nav-link" href="~/Archivo/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Archivo</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active ">
+                        <a class="nav-link" href="~/CasoReportado/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Casos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="~/Donacion/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Donacion</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="~/Usuario/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Usuario</p>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item  ">
+                        <a class="nav-link" href="~/Usuario/Cerrar">
+                            <i class="material-icons">dashboard</i>
+                            <p>Salir</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="content">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Casos</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="tabla" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Nombre</th>
+                                    <th>Direccion</th>
+                                    <th>Cantidad</th>
+                                    <th>Calidad</th>
+                                    <th>Celular</th>
+                                    <th>Distritto</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- TERMINA  el Contenido -->
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="ModalUbicacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Ubicacion</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/" autocomplete="off" method="post">
+                        <div class="form-horizontal">
+
+
+                            <input type="text" id="txttoken" name="txttoken" value="" />
+                            <div id="googleMap" style="width:100%;height:450px; background-color: #CCC">
+
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-12">
+                                    <button type="button" id="btnSave" class="btn btn-success btn-block">Recibido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/js/demo.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+
+
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgKdx4a-iT6Ts5NuUDkjhu0CzLcjZWPsE&callback"></script>
+
+</body>
+
+</html>
+
+
+<script>
+
+    var map;
+    var NewLatLng = [];
+    var cliente = [];
+    var markers = [];
+    var marker;
+    var bounds;
+    var infowindow;
+
+
+
+    $(document).ready(function () {
+        listaCasos();
+    })
+
+    function listaCasos() {
+      //  alert("hola");
+        $.ajax({
+
+            type: "GET",
+            url: '/CasoReportado/Get_Casos/',
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                var rows = '';
+                $.each(data, function (i, item) {
+
+                    var estado = "";
+                    if (item.estado == "1") {
+                        estado = "Atentido";
+                    }
+                    else {
+                        estado = "No Atendido";
+                    }
+
+                    rows += "<tr>"
+                    rows += "<td>" + item.tipoCaso + "</td>"
+                    rows += "<td>" + item.apellidoPaciente + "</td>"
+                    rows += "<td>" + item.nombrePaciente + "</td>"
+                    rows += "<td>" + item.sexo + "</td>"
+                    rows += "<td>" + item.edad + "</td>"
+                    rows += "<td>" + item.celular + "</td>"
+                    rows += "<td>" + item.distrito + "</td>"
+
+                    if (item.estado == "1") {
+                        rows += "<td> <select   name='selectCategoria'  class='form-control' onchange='mostrarInputs(/" + item.key_caso + ',' + item.estado + "/ )' >     <option value='1'  > " + estado + "</option>  <option value='0'> No Atendido </option> </select> </td>"
+                    }
+                    else {
+                        rows += "<td> <select   name='selectCategoria'  class='form-control' onchange='mostrarInputs(/" + item.key_caso + ',' + item.estado + "/ )' >     <option value='0'  > " + estado + "</option>  <option value='1'> Atendido </option> </select> </td>"
+                    }
+
+                    rows += "<td> <button type='button' id='btnVer' class='btn btn-primary'  onClick='Detalle(" + item.latitud + "," + item.longitud + "),tok(/" + item.token +"/)'>Ver</td>"
+                    rows += "</tr>";
+                    $("#tabla tbody").html(rows);
+                });
+            }
+
+        })
+    }
+
+
+    function mostrarInputs(key) {
+        var idcategoria;
+        idcategoria = String(key).replace(/\/+/g, "");
+        var separador = ",";
+        var separado = idcategoria.split(separador);
+        var key = separado[0].trim();
+        var estado = separado[1].trim();
+        var changeestado = "";
+        if (estado == "1") {
+            changeestado = "0";
+        }
+        if (estado == "0") {
+            changeestado = "1";
+        }
+        var data = { key: key, estado: changeestado }
+
+        $.ajax({
+            url: '/CasoReportado/Modificar/',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                // alertify.success("Modificado");
+                alert("modificado");
+                listaCasos();
+                //  getCategoria();
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    }
+
+    function tok(token) {
+        console.log(token);
+
+        var to;
+        to = String(token).replace(/\/+/g, "");
+        $("#txttoken").val(to);
+
+    }
+
+    function Detalle(latitud, longitud) {
+
+        
+        var la = String(latitud).trim();
+        var lo = String(longitud).trim();     
+
+        Mapa(la, lo);
+    }
+
+    function Mapa(la, lo) {
+
+        var latlng = new google.maps.LatLng(la, lo);
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+        marker = new google.maps.Marker
+
+        infowindow = new google.maps.InfoWindow({ content: "cargando" });
+
+        marker = new google.maps.Marker
+            (
+                {
+                    position: new google.maps.LatLng(la, lo),
+                    map: map,
+                    title: 'Click me'
+                }
+            );
+        $("#ModalUbicacion").modal("show");
+    }
+
+
+    $("#btnSave").click(function () {
+
+        var token = $("#txttoken").val();
+
+        var titulo = "Recibido";
+        var mensaje = "Gracias por Informar, Quedate en Casa";
+        var data = { titulo: titulo, mensaje: mensaje, token: token }
+
+        $.ajax({
+            url: '/CasoReportado/Notificacion',
+            type: 'post',
+            datatype: 'json',
+            data: data,
+            success: function (response) {
+
+                alert("Enviado");
+
+
+            },
+            error: function (xhr, status) {
+                alert('Disculpe, existió un problema');
+            },
+        });
+
+    });
+</script>

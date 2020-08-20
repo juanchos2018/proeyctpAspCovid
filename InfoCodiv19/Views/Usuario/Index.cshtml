@@ -1,0 +1,387 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Material Dashboard by Creative Tim
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+
+    <link href="~/Scripts/css/material-dashboard.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+
+    <link href="~/Scripts/css/demo.css" rel="stylesheet" />
+
+    <link href="~/Scripts/datatables/datatables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" />
+    <link href="~/Scripts/datatables/css/dataTables.foundation.min.css" rel="stylesheet" />
+
+
+
+    <script src="~/Scripts/js/demo.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+
+    <script src="~/Scripts/datatables/js/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/datatables/js/jquery-3.4.1.js"></script>
+
+
+
+    <!--Jquery-->
+
+
+
+
+</head>
+
+<body class="">
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                    Sisetema
+
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+
+                <ul class="nav">
+                    <li class="nav-item active ">
+                        <a class="nav-link" href="~/Archivo/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Archivo</p>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a class="nav-link" href="~/CasoReportado/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Casos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="~/Donacion/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Donacion</p>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="~/Usuario/Index">
+                            <i class="material-icons">dashboard</i>
+                            <p>Usuario</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item  ">
+                        <a class="nav-link" href="~/Usuario/Cerrar">
+                            <i class="material-icons">dashboard</i>
+                            <p>Salir</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="content">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+                        <button type="button" class="btn btn-info float-right" id="btnatrestudiante" data-toggle="modal" data-target="#AgregarUsuario">Agregar Usuario</button>
+                    </div>
+                    <div class="card-body">
+                        <table id="tabla" class="table">
+                            <thead>
+                                <tr>
+                                    <th>nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Correo</th>
+                                    <th>FEcha</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- TERMINA  el Contenido -->
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="AgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">Agrega Usuario</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/" method="post" autocomplete="off">
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="txtnombre" id="txtnombre" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellido </label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="txtapellido" id="txtapellido" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Correo </label>
+                                <div class="col-md-12">
+                                    <input type="email" class="form-control" name="txtcorreo" id="txtcorreo" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Clave </label>
+                                <div class="col-md-12">
+                                    <input type="password" class="form-control" name="txtclave" id="txtclave" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-12">
+                                    <button type="button" id="btnSave" class="btn btn-success btn-block ">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="modal fade" id="ModificarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/" method="post" autocomplete="off">
+
+
+                        <input type="text" hidden="" id="txtidusuario" name="name" value="" />
+                        <input type="text" hidden="" id="txtcorreo1" name="name" value="" />
+                   
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="txtnombre1" id="txtnombre" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellido </label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="txtapellido1" id="txtapellido" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-12">
+                                    <button type="button" id="btnSave1" class="btn btn-success btn-block ">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+  
+
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+
+<script>
+
+    $(document).ready(function () {
+        listaUsuaruios();
+    })
+
+    function listaUsuaruios() {
+      //  alert("hola");
+        $.ajax({
+
+            type: "GET",
+            url: '/Usuario/Get_Usuarios/',
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                var rows = '';
+                $.each(data, function (i, item) {
+                    rows += "<tr>"
+                    rows += "<td>" + item.nombre + "</td>"
+                    rows += "<td>" + item.apellido + "</td>"
+                    rows += "<td>" + item.correo + "</td>"
+                    rows += "<td>" + item.fecha + "</td>"    
+                    rows += "<td> <button type='button' id='btnedit' class='btn btn-primary' onclick='Modificar(/" + item.id_usuariio + "/)' >Editar </button>   </td>"
+
+                    
+                    rows += "</tr>";
+                    $("#tabla tbody").html(rows);
+                });
+            }
+
+        })
+
+        $("#tabla").DataTable({
+            "language": {
+                "lengthMenu": "Display _MENU_ records per page",
+                "zeroRecords": "Nothing found - sorry",
+                "info": "Showing page _PAGE_ of _PAGES_",
+                "infoEmpty": "No records available",
+
+
+                "infoFiltered": "(filtered from _MAX_ total records)"
+
+
+            }
+        });
+    }
+
+
+
+    $("#btnSave").click(function (e) {
+
+        var data = {
+
+            nombre: $("#txtnombre").val(),
+            apellido: $("#txtapellido").val(),
+            correo: $("#txtcorreo").val(),
+            clave: $("#txtclave").val()
+            
+        }
+
+        $.ajax({
+            url: '/Usuario/Save_Usuario/',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                console.log(data);
+                alert("Registrado");
+                $("#AgregarUsuario").modal('hide');
+                listaUsuaruios();
+
+            },
+            error: function (err) {
+                alert("Error: " + err.responseText);
+            }
+        })
+
+
+    });
+
+    function Modificar(id_usu) {
+
+        var id_usuario = String(id_usu).replace(/\/+/g, "");
+        $.ajax({
+            url: '/Usuario/GET/?id_usu=' + id_usuario,
+            type: 'GET',
+            dataType: 'json',
+           
+            success: function (data) {
+
+                console.log(data);
+                $("#txtidusuario").val(data.id_usuariio);
+                $("#txtcorreo1").val(data.correo);
+                $("#txtnombre1").val(data.nombre);
+                $("#txtapellido1").val(data.apellido);
+
+                $("#ModificarUsuario").modal('show');
+               // listaUsuaruios();
+
+            },
+            error: function (err) {
+                alert("Error: " + err.responseText);
+            }
+        })
+
+
+    }
+
+
+    $("#btnSave1").click(function (e) {
+
+        var data = {
+            id_usuariio: $("#txtidusuario").val(),
+            nombre: $("#txtnombre1").val(),
+            apellido: $("#txtapellido1").val(),
+            correo: $("#txtcorreo1").val()
+           
+        }
+
+        $.ajax({
+            url: '/Usuario/Modiciar_Usuario/',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                console.log(data);
+                alert("Modificado");
+                $("#ModificarUsuario").modal('hide');
+                listaUsuaruios();
+
+            },
+            error: function (err) {
+                alert("Error: " + err.responseText);
+            }
+        })
+
+
+    });
+
+
+    $(document).ready(function () {
+      
+    });
+</script>
